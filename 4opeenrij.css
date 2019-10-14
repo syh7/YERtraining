@@ -14,13 +14,33 @@ table{
   border-width: 2px;
 }
 
-td{
+td.empty{
   border-color: black;
   border-style: solid;
   border-width: 2px;
   height: 5em;
   width: 5em;
 }
-td:hover{
+td.empty:hover{
   background-color: gray;
+}
+td.player1{
+  border-color: yellow;
+  border-style: solid;
+  border-width: 2px;
+  height: 5em;
+  width: 5em;
+}
+td.player1:hover{
+  background-color: lightyellow;
+}
+td.player2{
+  border-color: red;
+  border-style: solid;
+  border-width: 2px;
+  height: 5em;
+  width: 5em;
+}
+td.player2:hover{
+  background-color: pink;
 }
