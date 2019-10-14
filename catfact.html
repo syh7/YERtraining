@@ -21,9 +21,8 @@
 		req.withCredentials = true;
 		req.onload = handleCatResponse;
 		req.send();
-		
 	}
-
+	
 	function handleCatResponse(){
 		let parsed = JSON.parse(this.response);
 		console.log("we're finally here!");
