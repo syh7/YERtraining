@@ -1,0 +1,38 @@
+<html>
+<header>
+	<title>Cat facts!</title>
+</header>
+
+<body>
+	THIS DOES NOT WORK WITH CORS!
+	<button onclick="sendCatRequest()">Click me for a fact!</button>
+	<div id="print"></div>
+</body>
+
+<script>
+	
+	let printDiv = document.getElementById("print");
+	let current;
+
+	function sendCatRequest(){
+		let req = new XMLHttpRequest();
+		req.open("GET", "https://catfact.ninja/fact?max_length=140", true);
+		req.setRequestHeader('Accept', 'application/json');
+		req.withCredentials = true;
+		req.onload = handleCatResponse;
+		req.send();
+		
+	}
+
+	function handleCatResponse(){
+		let parsed = JSON.parse(this.response);
+		console.log("we're finally here!");
+		console.log(parsed);
+		let para = document.createElement("p");
+		para.innerHTML = parsed.fact;
+		printDiv.appendChild(para);
+	}
+
+</script>
+
+</html>
