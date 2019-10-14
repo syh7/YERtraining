@@ -1,0 +1,56 @@
+<html>
+<header>
+    <title>Battleship!</title>
+    <link rel="stylesheet" href="battleship.css">
+</header>
+
+<body>
+    <table>
+        <tr>
+            <td class=water onclick="shoot(this)">tekst</td>
+            <td class=ship onclick="shoot(this)">tekst</td>
+            <td class=ship onclick="shoot(this)">tekst</td>
+            <td class=water onclick="shoot(this)">tekst</td>
+        </tr>
+    </table>
+
+    <div id="print">
+    </div>
+
+</body>
+
+
+<script>
+
+    let printDiv = document.getElementById("print");
+    let count = 0;
+    let tries = 0;
+    let total = document.getElementsByClassName("ship").length;
+
+    function shoot(cell){
+        if(cell.classList.contains('shot')){
+            printDiv.innerHTML = "You already shot this cell."
+            return;
+        }
+        tries++;
+        if(cell.classList.contains('water')){
+            cell.style.backgroundColor = "lightblue";
+            cell.classList.add("shot");
+            printDiv.innerHTML = "Miss.";
+        } else {
+            count++;
+            cell.style.backgroundColor = "red";
+            cell.classList.add("shot");
+            printDiv.innerHTML = "Hit.";
+            checkDone();
+        }
+    }
+
+    function checkDone(){
+        if(total==count)
+            window.alert("You won! It took you " + tries + " tries.");
+    }
+
+</script>
+
+</html>
