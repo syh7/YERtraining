@@ -27,25 +27,28 @@
 </body>
 
 <script>
+	let resultField = document.getElementById("result");
+	let numberField1 = document.getElementById("numberField1");
+	let numberField2 = document.getElementById("numberField2");
 
 	function add(){
-		document.getElementById("result").innerHTML = (parseInt(document.getElementById("numberField1").value) + parseInt(document.getElementById("numberField2").value));
+		resultField.innerHTML = (parseInt(numberField1.value) + parseInt(numberField2.value));
 	}
 	
 	function minus(){
-		document.getElementById("result").innerHTML = (parseInt(document.getElementById("numberField1").value) - parseInt(document.getElementById("numberField2").value));
+		resultField.innerHTML = (parseInt(numberField1.value) - parseInt(numberField2.value));
 	}
 	
 	function times(){
-		document.getElementById("result").innerHTML = (parseInt(document.getElementById("numberField1").value) * parseInt(document.getElementById("numberField2").value));
+		resultField.innerHTML = (parseInt(numberField1.value) * parseInt(numberField2.value));
 	}
 	
 	function divide(){
-		if(parseInt(document.getElementById("numberField2").value) == 0){
+		if(parseInt(numberField2.value) == 0){
 			alert("Can't divide by zero!");
-			document.getElementById("result").innerHTML = "";
+			resultField.innerHTML = "";
 		} else {
-			document.getElementById("result").innerHTML = (parseInt(document.getElementById("numberField1").value) / parseInt(document.getElementById("numberField2").value));
+			resultField.innerHTML = (parseInt(numberField1.value) / parseInt(numberField2.value));
 		}
 	}
 	
