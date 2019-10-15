@@ -6,6 +6,10 @@ body {
 h1 {
   text-align: center;
 }
+
+#resetbutton{
+  float: right;
+}
   
 table{
   border-color: black;
