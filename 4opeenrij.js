@@ -2,10 +2,11 @@
 const ROWS = 6;
 const COLS = 7;
 
+let textDiv = document.getElementById("text");
 let boardDiv = document.getElementById("boarddiv");
 let boardTable = document.getElementById("boardtable");
-let turn = 0;
-let done = false;
+let turns = 0;
+let finished = false;
 
 function makeBoard(){
 	for(let i = 0; i < ROWS; i++){
@@ -42,7 +43,7 @@ function getColumnIndexFromCell(cell){
 }
 
 function clickCell(cell){
-	if(done || !cell.classList.contains("empty")){
+	if(finished || !cell.classList.contains("empty")){
 		return;
 	}
 	
@@ -50,25 +51,22 @@ function clickCell(cell){
 	console.log(cell);
 	
 	let colIndex = getColumnIndexFromCell(cell);
-	console.log("colIndex:");
-	console.log(colIndex);
 	let rowIndex = getLowestEmptyCell(colIndex);
-	console.log("rowIndex:");
-	console.log(rowIndex);
 
-	let row = boardTable.rows[rowIndex];
-	let lowestCell = row.cells[colIndex];
+	let lowestCell = boardTable.rows[rowIndex].cells[colIndex];
 
 	console.log("lowest cell:");
 	console.log(lowestCell);
 
-	if(turn%2 == 0){
+	if(turns%2 == 0){
 		lowestCell.classList.replace("empty", "player0");
 	} else {
 		lowestCell.classList.replace("empty", "player1");
 	}
 
-	turn++;
+	turns++;
+
+	checkGameFinished();
 }
 
 function mouseToggleColumnHover(cell){
@@ -94,9 +92,9 @@ function mouseToggleColumnHover(cell){
 	}
 }
 
-function getLowestEmptyCell(col){
+function getLowestEmptyCell(colIndex){
 	for (let i = ROWS-1, row; row = boardTable.rows[i]; i--) {
-		if(row.cells[col].classList.contains("empty")){
+		if(row.cells[colIndex].classList.contains("empty")){
 			console.log("lowest cell index: " + i);
 			return i;
 		}
@@ -104,13 +102,38 @@ function getLowestEmptyCell(col){
 	return -1;
 }
 
-function gameFinished(){
-	console.log("function: gameFinished");
-	done = true;
+function checkLine(cell1, cell2, cell3, cell4){
+	return !cell1.classList.contains("empty") && ( 
+		(cell1.classList.contains("player0") && cell2.classList.contains("player0") && cell3.classList.contains("player0") && cell4.classList.contains("player0")) || 
+		(cell1.classList.contains("player1") && cell2.classList.contains("player1") && cell3.classList.contains("player1") && cell4.classList.contains("player1"))
+	);
 }
 
-function clickButton(){
-	alert();
+function checkGameFinished(){
+	//check horizontal win
+	for(let i = 0; i < ROWS; i++){
+		for(let j = 0; j < COLS-3; j++){
+			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i].cells[j+1], boardTable.rows[i].cells[j+2], boardTable.rows[i].cells[j+3])){
+				finished = true;
+				victoryDance();
+			}
+		}
+	}
+
+	//check vertical win
+
+	//check diagonal win
+}
+
+function victoryDance(){
+	let str = "Hooray! ";
+	if(turns%2 == 0){
+		str += "player 1 ";
+	} else {
+		str += "player 0 ";
+	}
+	str+= "has won the game! It took " + turns + " turns."
+	textDiv.innerHTML += str;
 }
 
 makeBoard();
