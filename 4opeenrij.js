@@ -3,10 +3,11 @@ const ROWS = 6;
 const COLS = 7;
 
 let textDiv = document.getElementById("text");
-let boardDiv = document.getElementById("boarddiv");
 let boardTable = document.getElementById("boardtable");
 let turns = 0;
 let finished = false;
+let player0 = "player 0";
+let player1 = "player 1";
 
 function makeBoard(){
 	for(let i = 0; i < ROWS; i++){
@@ -169,24 +170,50 @@ function resetGame(){
 			}
 		}
 		finished = false;
+		turns = 0;
+		textDiv.innerHTML += "Reset the game. <br>";
 	}
 }
 
 function victoryDance(){
 	let str = "Hooray! ";
 	if(turns%2 == 0){
-		str += "player 1 ";
+		str += player1;
 	} else {
-		str += "player 0 ";
+		str += player0;
 	}
-	str+= "has won the game! It took " + turns + " turns."
+	str+= " has won the game! It took " + turns + " turns. <br>"
 	textDiv.innerHTML += str;
+}
+
+function changeName(nr){
+	if(nr==0){
+		let newName = prompt("What do you want the new name of " + player0 + " to be?");
+		if(newName != null && newName != ""){
+			player0 = newName;
+		} else {
+			textDiv.innerHTML += "New name was cancelled.";
+		}
+	} else {
+		let newName = prompt("What do you want the new name of " + player1 + " to be?");
+		if(newName != null && newName != ""){
+			player1 = newName;
+		} else {
+			textDiv.innerHTML += "New name was cancelled.";
+		}
+	}
 }
 
 function pregame(){
 	makeBoard();
 	document.getElementById("resetButton").onclick = function(){
 		resetGame();
+	};
+	document.getElementById("nameButton0").onclick = function(){
+		changeName(0);
+	};
+	document.getElementById("nameButton1").onclick = function(){
+		changeName(1);
 	};
 }
 
