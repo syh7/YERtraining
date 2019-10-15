@@ -121,7 +121,14 @@ function checkGameFinished(){
 	}
 
 	//check vertical win
-
+	for(let i = 0; i < ROWS-3; i++){
+		for(let j = 0; j < COLS; j++){
+			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i+1].cells[j], boardTable.rows[i+2].cells[j], boardTable.rows[i+3].cells[j])){
+				finished = true;
+				victoryDance();
+			}
+		}
+	}
 	//check diagonal win
 }
 
