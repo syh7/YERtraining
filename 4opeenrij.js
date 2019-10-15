@@ -131,6 +131,7 @@ function checkGameFinished(){
 			}
 		}
 	}
+
 	//check diagonal win
 	for(let i = 0; i < ROWS-3; i++){
 		for(let j = 0; j < COLS-3; j++){
@@ -151,11 +152,23 @@ function checkGameFinished(){
 		}
 	}
 
-
-
+	//If entire board is filled, even if no one won.
 	if(turns == ROWS*COLS){
 		finished = true;
 		textDiv.innerHTML += "Oh no, looks like no one won. Better luck next time!"
+	}
+}
+
+function resetGame(){
+	let reset = confirm("Are you sure you want to reset the game?");
+	if(reset){
+		for(let i = 0; i < ROWS; i++){
+			for(let j = 0; j < COLS; j++){
+				boardTable.rows[i].cells[j].classList.replace("player0", "empty");
+				boardTable.rows[i].cells[j].classList.replace("player1", "empty");
+			}
+		}
+		finished = false;
 	}
 }
 
@@ -170,4 +183,11 @@ function victoryDance(){
 	textDiv.innerHTML += str;
 }
 
-makeBoard();
+function pregame(){
+	makeBoard();
+	document.getElementById("resetButton").onclick = function(){
+		resetGame();
+	};
+}
+
+pregame();
