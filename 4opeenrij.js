@@ -7,6 +7,7 @@ let boardTable = document.getElementById("boardtable");
 let rowArray = [];
 let clickedCell;
 let hoveredCell;
+let turn = 0;
 
 function makeBoard(){
 	for(let i = 0; i < ROWS; i++){
@@ -18,7 +19,10 @@ function makeBoard(){
 				clickCell(this);
 			});
 			td.addEventListener('mouseover', function(){
-				mouseOverCell(this)
+				mouseToggleHover(this)
+			});
+			td.addEventListener('mouseout', function(){
+				mouseToggleHover(this);
 			});
 			tr.appendChild(td);
 		}
@@ -27,17 +31,26 @@ function makeBoard(){
 	}
 }
 
-
-
 function clickCell(cell){
 	console.log(cell);
 	clickedCell = cell;
 	
+	if(!cell.classList.contains("empty")){
+		return;
+	}
+
+	cell.classList.remove("empty");
+	
+	if(turn%2 == 0){
+		cell.classList.add("player0");
+	} else {
+		cell.classList.add("player1");
+	}
+
+	turn++;
 }
 
-function mouseOverCell(cell){
-	console.log("hovering");
-	hoveredCell = cell;
+function mouseToggleHover(cell){
 	let index = -1;
 	
 	//get column number in row
@@ -48,16 +61,15 @@ function mouseOverCell(cell){
 		}
 	}
 
-	for(let i = 0; i < ROWS; i++){
-		for(let j = 0; j < COLS; j++){
-			rowArray[i].children[j].style.backgroundColor = "white";
-		}
+	//if row not found, weird error
+	if(index === -1){
+		alert("Toggle hover can't find row!");
+		return;
 	}
 
-	for(let i = 0; i < ROWS; i++){
-		rowArray[i].children[index].style.backgroundColor = "gray";
+	for(let i = 0, row; row = boardTable.rows[i]; i++){
+		row.cells[index].classList.toggle("hovered");
 	}
-
 }
 
 function gameFinished(){
