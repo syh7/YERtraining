@@ -5,6 +5,10 @@ const COLS = 7;
 let winDiv = document.getElementById("windiv");
 let textDiv = document.getElementById("text");
 let boardTable = document.getElementById("boardtable");
+let p0NameSpan = document.getElementById("p0NameSpan");
+let p0WinSpan = document.getElementById("p0WinSpan");
+let p1NameSpan = document.getElementById("p1NameSpan");
+let p1WinSpan = document.getElementById("p1WinSpan");
 let turns = 0;
 let finished = false;
 let player0 = {};
@@ -49,16 +53,10 @@ function clickCell(cell){
 		return;
 	}
 	
-	console.log("cell:");
-	console.log(cell);
-	
 	let colIndex = getColumnIndexFromCell(cell);
 	let rowIndex = getLowestEmptyCell(colIndex);
 
 	let lowestCell = boardTable.rows[rowIndex].cells[colIndex];
-
-	console.log("lowest cell:");
-	console.log(lowestCell);
 
 	if(turns%2 == 0){
 		lowestCell.classList.replace("empty", "player0");
@@ -200,6 +198,7 @@ function gameWon(cell){
 		player1.wins++;
 	}
 	updateLocalStorage();
+	updateWinsDiv();
 }
 
 function changeName(nr){
@@ -208,6 +207,7 @@ function changeName(nr){
 		if(newName != null && newName != ""){
 			player0.name = newName;
 			updateLocalStorage();
+			updateWinsDiv();
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
@@ -216,10 +216,18 @@ function changeName(nr){
 		if(newName != null && newName != ""){
 			player1.name = newName;
 			updateLocalStorage();
+			updateWinsDiv();
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
 	}
+}
+
+function updateWinsDiv(){
+	p0NameSpan.innerHTML = "<b>" + player0.name + "</b>. Wins: ";
+	p0WinSpan.innerHTML = player0.wins + "<br>";
+	p1NameSpan.innerHTML = "<b>" + player1.name + "</b>. Wins: ";
+	p1WinSpan.innerHTML = player1.wins + "<br>";
 }
 
 function updateLocalStorage(){
@@ -228,7 +236,6 @@ function updateLocalStorage(){
 }
 
 function pregame(){
-	makeBoard();
 	document.getElementById("resetGameButton").onclick = function(){
 		resetGame();
 	};
@@ -251,6 +258,9 @@ function pregame(){
 		player1.name = "player 1";
 		player1.wins = 0;
 	}
+
+	makeBoard();
+	updateWinsDiv();
 }
 
 pregame();
