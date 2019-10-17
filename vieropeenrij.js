@@ -8,9 +8,7 @@ let boardTable = document.getElementById("boardtable");
 let turns = 0;
 let finished = false;
 let player0 = {};
-player0.name = "player 0";
 let player1 = {};
-player0.name = "player 1";
 
 function makeBoard(){
 	for(let i = 0; i < ROWS; i++){
@@ -218,6 +216,19 @@ function pregame(){
 	document.getElementById("nameButton1").onclick = function(){
 		changeName(1);
 	};
+
+	if(localStorage.p0JSON){
+		player0 = JSON.parse(localStorage.getItem("p0JSON"));
+		player1 = JSON.parse(localStorage.getItem("p1JSON"));
+	} else {
+		player0.name = "player 0";
+		player0.wins = 0;
+		player1.name = "player 1";
+		player1.wins = 0;
+
+		localStorage.setItem("p0JSON", JSON.stringify(player0));
+		localStorage.setItem("p1JSON", JSON.stringify(player1));
+	}
 }
 
 pregame();
