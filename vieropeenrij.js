@@ -116,8 +116,7 @@ function checkGameFinished(){
 	for(let i = 0; i < ROWS; i++){
 		for(let j = 0; j < COLS-3; j++){
 			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i].cells[j+1], boardTable.rows[i].cells[j+2], boardTable.rows[i].cells[j+3])){
-				finished = true;
-				victoryDance();
+				gameWon(boardTable.rows[i].cells[j]);
 				return;
 			}
 		}
@@ -127,8 +126,7 @@ function checkGameFinished(){
 	for(let i = 0; i < ROWS-3; i++){
 		for(let j = 0; j < COLS; j++){
 			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i+1].cells[j], boardTable.rows[i+2].cells[j], boardTable.rows[i+3].cells[j])){
-				finished = true;
-				victoryDance();
+				gameWon(boardTable.rows[i].cells[j]);
 				return;
 			}
 		}
@@ -138,8 +136,7 @@ function checkGameFinished(){
 	for(let i = 0; i < ROWS-3; i++){
 		for(let j = 0; j < COLS-3; j++){
 			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i+1].cells[j+1], boardTable.rows[i+2].cells[j+2], boardTable.rows[i+3].cells[j+3])){
-				finished = true;
-				victoryDance();
+				gameWon(boardTable.rows[i].cells[j]);
 				return;
 			}
 		}
@@ -147,8 +144,7 @@ function checkGameFinished(){
 	for(let i = ROWS-3; i < ROWS; i++){
 		for(let j = 0; j < COLS-3; j++){
 			if(checkLine(boardTable.rows[i].cells[j], boardTable.rows[i-1].cells[j+1], boardTable.rows[i-2].cells[j+2], boardTable.rows[i-3].cells[j+3])){
-				finished = true;
-				victoryDance();
+				gameWon(boardTable.rows[i].cells[j]);
 				return;
 			}
 		}
@@ -195,11 +191,23 @@ function victoryDance(){
 	textDiv.innerHTML += str;
 }
 
+function gameWon(cell){
+	finished = true;
+	victoryDance();
+	if(cell.classList.contains("player0")){
+		player0.wins++;
+	} else {
+		player1.wins++;
+	}
+	updateLocalStorage();
+}
+
 function changeName(nr){
 	if(nr==0){
 		let newName = prompt("What do you want the new name of " + player0 + " to be?");
 		if(newName != null && newName != ""){
 			player0.name = newName;
+			updateLocalStorage();
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
@@ -207,10 +215,16 @@ function changeName(nr){
 		let newName = prompt("What do you want the new name of " + player1 + " to be?");
 		if(newName != null && newName != ""){
 			player1.name = newName;
+			updateLocalStorage();
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
 	}
+}
+
+function updateLocalStorage(){
+	localStorage.setItem("p0JSON", JSON.stringify(player0));
+	localStorage.setItem("p1JSON", JSON.stringify(player1));
 }
 
 function pregame(){
@@ -236,9 +250,6 @@ function pregame(){
 		player0.wins = 0;
 		player1.name = "player 1";
 		player1.wins = 0;
-
-		localStorage.setItem("p0JSON", JSON.stringify(player0));
-		localStorage.setItem("p1JSON", JSON.stringify(player1));
 	}
 }
 
