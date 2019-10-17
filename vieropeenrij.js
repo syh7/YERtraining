@@ -161,6 +161,14 @@ function checkGameFinished(){
 	}
 }
 
+function resetLocalStorage(){
+	let bool = confirm("Are you absolutely sure you want to delete saved games?");
+	if(bool){
+		localStorage.removeItem("p0JSON");
+		localStorage.removeItem("p1JSON");
+	}
+}
+
 function resetGame(){
 	let reset = confirm("Are you sure you want to reset the game?");
 	if(reset){
@@ -207,8 +215,11 @@ function changeName(nr){
 
 function pregame(){
 	makeBoard();
-	document.getElementById("resetButton").onclick = function(){
+	document.getElementById("resetGameButton").onclick = function(){
 		resetGame();
+	};
+	document.getElementById("removeLocalStorageButton").onclick = function(){
+		resetLocalStorage();
 	};
 	document.getElementById("nameButton0").onclick = function(){
 		changeName(0);
