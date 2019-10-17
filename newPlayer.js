@@ -4,12 +4,12 @@ let lastNameInput = document.getElementById("lastNameInput");
 let dateOfBirthInput = document.getElementById("dateOfBirthInput");
 let playerLevelInput = document.getElementById("playerLevelInput");
 
-function saveNewPlayer(){
-    let players = [];
-    if(localStorage.players){
-        players = JSON.parse(localStorage.getItem("players"));
-    }
+let players = [];
+if(localStorage.players){
+    players = JSON.parse(localStorage.getItem("players"));
+}
 
+function saveNewPlayer(){
     let player = {};
     if(firstNameInput.value == ""){
         alert("First name cannot be empty.");
@@ -26,9 +26,21 @@ function saveNewPlayer(){
         player.dateOfBirth = dateOfBirthInput.value;
         player.playerLevel = playerLevelInput.value;
 
-        players.push(JSON.stringify(player));
-        localStorage.setItem("players", players);
+        for(let i = 0; i < players.length; i++){
+            if(isSamePlayer(player, players[i])){
+                alert("This player already exists!")
+                return;
+            }
+        }
+
+        players.push(player);
+        localStorage.setItem("players", JSON.stringify(players));
 
         console.log(players);
     }
+}
+
+function isSamePlayer(player0, player1){
+    return player0.firstName == player1.firstName && player0.lastName == player0.lastName 
+        && player0.dateOfBirth == player1.dateOfBirth && player0.playerLevel == player1.playerLevel;
 }
