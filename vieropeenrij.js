@@ -161,6 +161,7 @@ function resetLocalStorage(){
 		localStorage.removeItem("p0JSON");
 		localStorage.removeItem("p1JSON");
 	}
+	updateWinsDiv();
 }
 
 function resetGame(){
