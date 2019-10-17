@@ -3,15 +3,15 @@
 
     </header>
     <body>
-        <form>
+        <div id="inputOptions">
             First name: <br>
-            <input type="text" id="firstName"> <br>
+            <input type="text" id="firstNameInput"> <br>
             Last name: <br>
-            <input type="text" id="lastName"> <br>
+            <input type="text" id="lastNameInput"> <br>
             Date of birth: <br>
-            <input type="date" id="dateOfBirth"> <br>
+            <input type="date" id="dateOfBirthInput"> <br>
             Player level: <br>
-            <select name="playerLevel">
+            <select id="playerLevelInput">
                 <option value="9"> 9e divisie </option>
                 <option value="8"> 8e divisie </option>
                 <option value="7"> 7e divisie </option>
@@ -24,9 +24,9 @@
                 <option value="Ere-divisie"> Ere-divisie </option>
             </select> <br>
 
-            <input type="submit" id="submit" value="Submit">
-        </form>
+            <button id="submitButton" onclick="saveNewPlayer()"> Submit </button>
+        </div>
     </body>
 
-    <script src="form.js"></script>
+    <script src="newPlayer.js"></script>
 </html>
