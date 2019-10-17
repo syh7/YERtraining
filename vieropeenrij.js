@@ -2,12 +2,15 @@
 const ROWS = 6;
 const COLS = 7;
 
+let winDiv = document.getElementById("windiv");
 let textDiv = document.getElementById("text");
 let boardTable = document.getElementById("boardtable");
 let turns = 0;
 let finished = false;
-let player0 = "player 0";
-let player1 = "player 1";
+let player0 = {};
+player0.name = "player 0";
+let player1 = {};
+player0.name = "player 1";
 
 function makeBoard(){
 	for(let i = 0; i < ROWS; i++){
@@ -178,9 +181,9 @@ function resetGame(){
 function victoryDance(){
 	let str = "Hooray! ";
 	if(turns%2 == 0){
-		str += player1;
+		str += player1.name;
 	} else {
-		str += player0;
+		str += player0.name;
 	}
 	str+= " has won the game! It took " + turns + " turns. <br>"
 	textDiv.innerHTML += str;
@@ -190,14 +193,14 @@ function changeName(nr){
 	if(nr==0){
 		let newName = prompt("What do you want the new name of " + player0 + " to be?");
 		if(newName != null && newName != ""){
-			player0 = newName;
+			player0.name = newName;
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
 	} else {
 		let newName = prompt("What do you want the new name of " + player1 + " to be?");
 		if(newName != null && newName != ""){
-			player1 = newName;
+			player1.name = newName;
 		} else {
 			textDiv.innerHTML += "New name was cancelled.";
 		}
